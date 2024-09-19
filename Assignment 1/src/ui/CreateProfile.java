@@ -815,7 +815,7 @@ public class CreateProfile extends javax.swing.JPanel {
 	
 	//Professional Information
 	dev.setLinkedInProfile(linkedin.getText());
-	dev.setYearsOfExperience(yearsOfExp.getComponentCount());
+	dev.setYearsOfExperience((int) yearsOfExp.getValue());
 	dev.setTechnicalSkills(technicalSkills.getSelectedValuesList());
 	dev.setTechnicalSkillsIndices(technicalSkills.getSelectedIndices());
 	dev.setAreaOfInterest(areaOfInterest.getSelectedValuesList());
