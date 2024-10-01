@@ -5,18 +5,22 @@
 package ui;
 
 import java.awt.*;
-import javax.swing.ImageIcon;
+import model.PersonDirectory;
+import ui.personmanager.AddPerson;
 /**
  *
  * @author Lakshman
  */
 public class MainJFrame extends javax.swing.JFrame {
 
+	private PersonDirectory personDirectory;
+	
 	/**
 	 * Creates new form MainJFrame
 	 */
 	public MainJFrame() {
 		initComponents();
+		personDirectory = new PersonDirectory();
 	}
 
 	/**
@@ -28,51 +32,65 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
+        splitPane = new javax.swing.JSplitPane();
         leftPanel = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
+        separator = new javax.swing.JSeparator();
         title = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        dashboardLabel = new javax.swing.JLabel();
+        addPersonLabel = new javax.swing.JLabel();
+        listPersonLabel = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        splitPane.setDividerSize(0);
+
         leftPanel.setBackground(new java.awt.Color(232, 232, 232));
         leftPanel.setPreferredSize(new java.awt.Dimension(210, 700));
 
-        jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
+        separator.setForeground(new java.awt.Color(204, 204, 204));
 
         title.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
         title.setForeground(new java.awt.Color(9, 9, 11));
         title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user-groups.png"))); // NOI18N
         title.setText("PersonManager");
+        title.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(121, 121, 130));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard.png"))); // NOI18N
-        jLabel1.setText("Dashboard");
+        dashboardLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        dashboardLabel.setForeground(new java.awt.Color(121, 121, 130));
+        dashboardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboardLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard.png"))); // NOI18N
+        dashboardLabel.setText("Dashboard");
+        dashboardLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        dashboardLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(121, 121, 130));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add-user.png"))); // NOI18N
-        jLabel2.setText("Add person");
+        addPersonLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        addPersonLabel.setForeground(new java.awt.Color(121, 121, 130));
+        addPersonLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addPersonLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add-user.png"))); // NOI18N
+        addPersonLabel.setText("Add person");
+        addPersonLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addPersonLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addPersonLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addPersonLabelMouseClicked(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(121, 121, 130));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user-groups-listt.png"))); // NOI18N
-        jLabel3.setText("List person");
+        listPersonLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        listPersonLabel.setForeground(new java.awt.Color(121, 121, 130));
+        listPersonLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        listPersonLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user-groups-list.png"))); // NOI18N
+        listPersonLabel.setText("List person");
+        listPersonLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listPersonLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(separator)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(title)
@@ -80,9 +98,9 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(leftPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(dashboardLabel)
+                    .addComponent(addPersonLabel)
+                    .addComponent(listPersonLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftPanelLayout.setVerticalGroup(
@@ -91,36 +109,46 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(dashboardLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(addPersonLabel)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel3)
+                .addComponent(listPersonLabel)
                 .addContainerGap(518, Short.MAX_VALUE))
         );
 
-        jSplitPane1.setLeftComponent(leftPanel);
+        splitPane.setLeftComponent(leftPanel);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setPreferredSize(new java.awt.Dimension(790, 700));
         mainPanel.setLayout(new java.awt.CardLayout());
-        jSplitPane1.setRightComponent(mainPanel);
+        splitPane.setRightComponent(mainPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(splitPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(splitPane)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addPersonLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPersonLabelMouseClicked
+        // TODO add your handling code here:
+	AddPerson panel = new AddPerson(mainPanel, personDirectory);
+	mainPanel.add("AddPerson", panel);
+	
+	CardLayout layout = (CardLayout) mainPanel.getLayout();
+	layout.next(mainPanel);
+    }//GEN-LAST:event_addPersonLabelMouseClicked
 
 	/**
 	 * @param args the command line arguments
@@ -158,13 +186,13 @@ public class MainJFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JLabel addPersonLabel;
+    private javax.swing.JLabel dashboardLabel;
     private javax.swing.JPanel leftPanel;
+    private javax.swing.JLabel listPersonLabel;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JSeparator separator;
+    private javax.swing.JSplitPane splitPane;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

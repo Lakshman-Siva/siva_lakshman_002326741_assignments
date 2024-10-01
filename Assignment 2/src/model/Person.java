@@ -17,7 +17,7 @@ public class Person {
 	private Date dateOfBirth;
 	private int age;
 	private long socialSecurityNumber;
-	private boolean isEmployed;
+	private boolean isMarried;
 	private double salary;
 	private int creditScore;
 	private Address homeAddress;
@@ -68,12 +68,12 @@ public class Person {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
-	public boolean isIsEmployed() {
-		return isEmployed;
+	public boolean isIsMarried() {
+		return isMarried;
 	}
 
-	public void setIsEmployed(boolean isEmployed) {
-		this.isEmployed = isEmployed;
+	public void setIsMarried(boolean isMarried) {
+		this.isMarried = isMarried;
 	}
 
 	public double getSalary() {
