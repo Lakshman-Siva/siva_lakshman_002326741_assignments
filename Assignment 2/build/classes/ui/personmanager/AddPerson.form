@@ -59,19 +59,23 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="backBtn" min="-2" pref="67" max="-2" attributes="0"/>
-                      <EmptySpace pref="707" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                      <Component id="backBtn" min="-2" pref="70" max="-2" attributes="0"/>
+                      <EmptySpace min="798" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="heading" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="backBtn" min="-2" pref="28" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
+                      <Component id="heading" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                      <Component id="backBtn" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -99,7 +103,7 @@
                   <Color id="Hand Cursor"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
-                <Property name="iconTextGap" type="int" value="3"/>
+                <Property name="iconTextGap" type="int" value="5"/>
                 <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
                   <Insets value="[10, 14, 3, 14]"/>
                 </Property>
@@ -111,6 +115,18 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="backBtnMouseExited"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backBtnActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="heading">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Calibri" size="30" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Add Person"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -187,8 +203,6 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="homePhoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="homePhone" alignment="0" min="-2" pref="610" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="homeUnitLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -227,6 +241,13 @@
                                           </Group>
                                       </Group>
                                       <Component id="homeAddressHelper" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="homePhoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="homePhone" alignment="0" min="-2" pref="610" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <EmptySpace pref="17" max="32767" attributes="0"/>
                               </Group>
@@ -316,6 +337,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Address Line 1"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -352,6 +374,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Address Line 2"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -377,6 +400,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Unit Number"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -402,6 +426,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Zip Code"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -463,6 +488,7 @@
                             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="&quot; -- Select Country --&quot;" type="code"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the Country"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -491,6 +517,7 @@
                                 <StringItem index="3" value="Item 4"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the State"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -519,6 +546,7 @@
                                 <StringItem index="3" value="Item 4"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the City"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -536,6 +564,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter your Phone Number"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -729,6 +758,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the First Name"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -743,6 +773,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Last Name"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -782,6 +813,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="0" green="0" red="0" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Date of Birth"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="ageLabel">
@@ -800,6 +832,7 @@
                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the age"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
@@ -821,6 +854,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Social Security Number"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -842,6 +876,7 @@
                               <Color blue="0" green="0" red="0" type="rgb"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Is Married"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Check if you&apos;re married"/>
                             <Property name="verticalTextPosition" type="int" value="1"/>
                           </Properties>
                         </Component>
@@ -861,6 +896,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter your Salary"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -886,6 +922,7 @@
                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                               <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter your Credit Score"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
@@ -923,8 +960,6 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="workPhoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="workPhone" alignment="0" min="-2" pref="610" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="workUnitLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -963,6 +998,13 @@
                                                   </Group>
                                               </Group>
                                               <Component id="workAddressHelper" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="workPhoneLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="workPhone" alignment="0" min="-2" pref="610" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
@@ -1031,8 +1073,8 @@
                                   <Component id="workPhoneLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="workPhone" min="-2" pref="28" max="-2" attributes="0"/>
-                                  <EmptySpace pref="36" max="32767" attributes="0"/>
-                                  <Component id="submitBtn" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                                  <Component id="submitBtn" min="-2" pref="35" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1071,6 +1113,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Address Line 1"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -1096,6 +1139,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Address Line 2"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -1121,6 +1165,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Unit Number"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -1146,6 +1191,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter the Zip Code"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -1182,6 +1228,7 @@
                                 <StringItem index="3" value="Item 4"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the Country"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -1221,6 +1268,7 @@
                                 <StringItem index="3" value="Item 4"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the State"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -1260,6 +1308,7 @@
                                 <StringItem index="3" value="Item 4"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Select the City"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder>
@@ -1288,6 +1337,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value="Enter your Phone Number"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                                 <LineBorder roundedCorners="true" thickness="2">
@@ -1303,7 +1353,7 @@
                               <Color blue="0" green="0" red="0" type="rgb"/>
                             </Property>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Calibri" size="14" style="0"/>
+                              <Font name="Calibri" size="18" style="0"/>
                             </Property>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1321,6 +1371,7 @@
                               <Insets value="[10, 14, 3, 14]"/>
                             </Property>
                             <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+                            <Property name="verticalTextPosition" type="int" value="3"/>
                           </Properties>
                           <Events>
                             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="submitBtnMouseEntered"/>

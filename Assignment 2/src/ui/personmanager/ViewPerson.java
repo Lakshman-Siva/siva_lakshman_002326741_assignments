@@ -6,27 +6,102 @@ package ui.personmanager;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JPanel;
+import model.Person;
 import model.PersonDirectory;
 
 /**
  *
  * @author Lakshman
  */
-public class AddPerson extends javax.swing.JPanel {
-	
+public class ViewPerson extends javax.swing.JPanel {
+
 	private JPanel mainFramePanel;
 	private PersonDirectory personDirectory;
-
+	private Person person;
+	
 	/**
-	 * Creates new form AddPerson
+	 * Creates new form ViewPerson
 	 */
-	public AddPerson(JPanel panel, PersonDirectory pd) {
+	public ViewPerson(JPanel panel, PersonDirectory pd, Person per) {
 		initComponents();
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20); // Adjusting the scroll speed.
 		
 		personDirectory = pd;
 		mainFramePanel = panel;
+		person = per;
+		
+		setTextFields();
+		toggleFields(false);
+	}
+	
+	public void setTextFields() {
+		// Personal Info Fields
+		firstName.setText(person.getFirstName());
+		lastName.setText(person.getLastName());
+		dob.setDate(person.getDateOfBirth());
+		isMarried.setSelected(person.isIsMarried());
+		age.setValue(person.getAge());
+		ssn.setText(person.getSocialSecurityNumber()+"");
+		creditScore.setValue(person.getCreditScore());
+		salary.setText(person.getSalary()+"");
+		
+		// Home Address Fields
+		homeAddressLine1.setText(person.getHomeAddressLine1());
+		homeAddressLine2.setText(person.getHomeAddressLine2());
+		homeUnit.setText(person.getHomeUnitNumber());
+		homeCountry.setSelectedItem(person.getHomeCountry());
+		homeState.setSelectedItem(person.getHomeState());
+		homeCity.setSelectedItem(person.getHomeCity());
+		homeZip.setText(person.getHomeZipCode());
+		homePhone.setText(person.getHomePhoneNumber());
+		
+		// Work Address Fields
+		workAddressLine1.setText(person.getWorkAddressLine1());
+		workAddressLine2.setText(person.getWorkAddressLine2());
+		workUnit.setText(person.getWorkUnitNumber());
+		workCountry.setSelectedItem(person.getWorkCountry());
+		workState.setSelectedItem(person.getWorkState());
+		workCity.setSelectedItem(person.getWorkCity());
+		workZip.setText(person.getWorkZipCode());
+		workPhone.setText(person.getWorkPhoneNumber());
+	}
+	
+	public void toggleFields(boolean enabled) {
+		// Personal Info Fields
+		firstName.setEnabled(enabled);
+		lastName.setEnabled(enabled);
+		dob.setEnabled(enabled);
+		isMarried.setEnabled(enabled);
+		age.setEnabled(enabled);
+		ssn.setEnabled(enabled);
+		creditScore.setEnabled(enabled);
+		salary.setEnabled(enabled);
+		
+		// Home Address Fields
+		homeAddressLine1.setEnabled(enabled);
+		homeAddressLine2.setEnabled(enabled);
+		homeUnit.setEnabled(enabled);
+		homeCountry.setEnabled(enabled);
+		homeState.setEnabled(enabled);
+		homeCity.setEnabled(enabled);
+		homeZip.setEnabled(enabled);
+		homePhone.setEnabled(enabled);
+		
+		// Work Address Fields
+		workAddressLine1.setEnabled(enabled);
+		workAddressLine2.setEnabled(enabled);
+		workUnit.setEnabled(enabled);
+		workCountry.setEnabled(enabled);
+		workState.setEnabled(enabled);
+		workCity.setEnabled(enabled);
+		workZip.setEnabled(enabled);
+		workPhone.setEnabled(enabled);
+		
+		// Buttons
+		saveBtn.setEnabled(enabled);
+		updateBtn.setEnabled(!enabled);
 	}
 
 	/**
@@ -101,7 +176,8 @@ public class AddPerson extends javax.swing.JPanel {
         workCity = new javax.swing.JComboBox<>();
         workPhoneLabel = new javax.swing.JLabel();
         workPhone = new javax.swing.JTextField();
-        submitBtn = new javax.swing.JButton();
+        saveBtn = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
 
         splitPane.setDividerSize(0);
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -139,7 +215,7 @@ public class AddPerson extends javax.swing.JPanel {
         heading.setFont(new java.awt.Font("Calibri", 1, 30)); // NOI18N
         heading.setForeground(new java.awt.Color(0, 0, 0));
         heading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        heading.setText("Add Person");
+        heading.setText("View Person");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -415,7 +491,7 @@ public class AddPerson extends javax.swing.JPanel {
         salaryLabel.setText("Salary");
 
         salary.setBackground(new java.awt.Color(255, 255, 255));
-        salary.setToolTipText("Enter your Salary");
+        salary.setToolTipText("Enter the Salary");
         salary.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(238, 238, 240), 2, true));
 
         creditScoreLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -423,7 +499,7 @@ public class AddPerson extends javax.swing.JPanel {
         creditScoreLabel.setText("Credit Score");
 
         creditScore.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        creditScore.setToolTipText("Enter your Credit Score");
+        creditScore.setToolTipText("Enter the Credit Score");
         creditScore.setBorder(null);
 
         javax.swing.GroupLayout personalInfoPanelLayout = new javax.swing.GroupLayout(personalInfoPanel);
@@ -596,28 +672,53 @@ public class AddPerson extends javax.swing.JPanel {
         workPhone.setToolTipText("Enter your Phone Number");
         workPhone.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(238, 238, 240), 2, true));
 
-        submitBtn.setBackground(new java.awt.Color(0, 0, 0));
-        submitBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        submitBtn.setForeground(new java.awt.Color(255, 255, 255));
-        submitBtn.setText("Submit");
-        submitBtn.setBorder(null);
-        submitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        submitBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        submitBtn.setIconTextGap(3);
-        submitBtn.setMargin(new java.awt.Insets(10, 14, 3, 14));
-        submitBtn.setVerifyInputWhenFocusTarget(false);
-        submitBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        submitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        saveBtn.setBackground(new java.awt.Color(0, 0, 0));
+        saveBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("Save");
+        saveBtn.setBorder(null);
+        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        saveBtn.setIconTextGap(3);
+        saveBtn.setMargin(new java.awt.Insets(10, 14, 3, 14));
+        saveBtn.setVerifyInputWhenFocusTarget(false);
+        saveBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                submitBtnMouseEntered(evt);
+                saveBtnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                submitBtnMouseExited(evt);
+                saveBtnMouseExited(evt);
             }
         });
-        submitBtn.addActionListener(new java.awt.event.ActionListener() {
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitBtnActionPerformed(evt);
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        updateBtn.setBackground(new java.awt.Color(0, 0, 0));
+        updateBtn.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        updateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        updateBtn.setText("Update");
+        updateBtn.setBorder(null);
+        updateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        updateBtn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        updateBtn.setIconTextGap(3);
+        updateBtn.setMargin(new java.awt.Insets(10, 14, 3, 14));
+        updateBtn.setVerifyInputWhenFocusTarget(false);
+        updateBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateBtnMouseExited(evt);
+            }
+        });
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
             }
         });
 
@@ -665,8 +766,10 @@ public class AddPerson extends javax.swing.JPanel {
                                     .addComponent(workPhoneLabel)
                                     .addComponent(workPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(211, 211, 211)
-                        .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(110, 110, 110)
+                        .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -716,7 +819,9 @@ public class AddPerson extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(workPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -740,35 +845,54 @@ public class AddPerson extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        // TODO add your handling code here:
-	mainFramePanel.remove(this);
-	
-	CardLayout layout = (CardLayout) mainFramePanel.getLayout();
-	layout.previous(mainFramePanel);
-    }//GEN-LAST:event_backBtnActionPerformed
-
     private void backBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseEntered
         // TODO add your handling code here:
-	backBtn.setBackground(Color.DARK_GRAY);
+        backBtn.setBackground(Color.DARK_GRAY);
     }//GEN-LAST:event_backBtnMouseEntered
 
     private void backBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backBtnMouseExited
         // TODO add your handling code here:
-	backBtn.setBackground(Color.BLACK);
+        backBtn.setBackground(Color.BLACK);
     }//GEN-LAST:event_backBtnMouseExited
 
-    private void submitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitBtnMouseEntered
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_submitBtnMouseEntered
+	mainFramePanel.remove(this);
+	
+	Component[] panelStack = mainFramePanel.getComponents();
+	JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
+	
+	ListPerson listPerson = (ListPerson) lastPanel;
+	listPerson.populateTable();
 
-    private void submitBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submitBtnMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_submitBtnMouseExited
+	CardLayout layout = (CardLayout) mainFramePanel.getLayout();
+	layout.previous(mainFramePanel);
+    }//GEN-LAST:event_backBtnActionPerformed
 
-    private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
+    private void saveBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_submitBtnActionPerformed
+    }//GEN-LAST:event_saveBtnMouseEntered
+
+    private void saveBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtnMouseExited
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void updateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateBtnMouseEntered
+
+    private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateBtnMouseExited
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        // TODO add your handling code here:
+	toggleFields(true);
+    }//GEN-LAST:event_updateBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -812,12 +936,13 @@ public class AddPerson extends javax.swing.JPanel {
     private javax.swing.JLabel personalInfoTitle;
     private javax.swing.JTextField salary;
     private javax.swing.JLabel salaryLabel;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JTextField ssn;
     private javax.swing.JLabel ssnLabel;
-    private javax.swing.JButton submitBtn;
     private javax.swing.JPanel topPanel;
+    private javax.swing.JButton updateBtn;
     private javax.swing.JLabel workAddressHelper;
     private javax.swing.JTextField workAddressLine1;
     private javax.swing.JLabel workAddressLine1Label;

@@ -7,6 +7,7 @@ package ui;
 import java.awt.*;
 import model.PersonDirectory;
 import ui.personmanager.AddPerson;
+import ui.personmanager.ListPerson;
 /**
  *
  * @author Lakshman
@@ -20,7 +21,7 @@ public class MainJFrame extends javax.swing.JFrame {
 	 */
 	public MainJFrame() {
 		initComponents();
-		personDirectory = new PersonDirectory();
+		personDirectory = new PersonDirectory();		
 	}
 
 	/**
@@ -85,6 +86,11 @@ public class MainJFrame extends javax.swing.JFrame {
         listPersonLabel.setText("List person");
         listPersonLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         listPersonLabel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        listPersonLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listPersonLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
@@ -149,6 +155,15 @@ public class MainJFrame extends javax.swing.JFrame {
 	CardLayout layout = (CardLayout) mainPanel.getLayout();
 	layout.next(mainPanel);
     }//GEN-LAST:event_addPersonLabelMouseClicked
+
+    private void listPersonLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPersonLabelMouseClicked
+        // TODO add your handling code here:
+	ListPerson panel = new ListPerson(mainPanel, personDirectory);
+	mainPanel.add("ViewPerson", panel);
+	
+	CardLayout layout = (CardLayout) mainPanel.getLayout();
+	layout.next(mainPanel);
+    }//GEN-LAST:event_listPersonLabelMouseClicked
 
 	/**
 	 * @param args the command line arguments

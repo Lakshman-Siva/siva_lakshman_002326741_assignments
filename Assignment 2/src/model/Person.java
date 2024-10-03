@@ -26,6 +26,13 @@ public class Person {
 	public Person() {
 		homeAddress = new Address();
 		workAddress = new Address();
+		firstName = "";
+		lastName = "";
+		age = 1;
+		socialSecurityNumber = 0;
+		isMarried = false;
+		salary = 0;
+		creditScore = 0;
 	}
 
 	public String getFirstName() {

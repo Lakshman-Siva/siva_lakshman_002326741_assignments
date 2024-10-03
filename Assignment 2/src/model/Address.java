@@ -18,6 +18,17 @@ public class Address {
 	private String country;
 	private String zipCode;
 	private String phoneNumber;
+	
+	public Address() {
+		addressLine1 = "";
+		addressLine2 = "";
+		unitNumber = "";
+		city = "";
+		state = "";
+		country = "";
+		zipCode = "";
+		phoneNumber = "";
+	}
 
 	public String getAddressLine1() {
 		return addressLine1;
