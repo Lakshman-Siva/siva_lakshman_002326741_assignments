@@ -127,9 +127,9 @@ public class DashBoard extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addGroup(totalPeoplePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(count)
-                    .addComponent(heading1)
-                    .addComponent(headingHelper1))
-                .addGap(114, 114, 114))
+                    .addComponent(heading1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(headingHelper1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97))
         );
         totalPeoplePanelLayout.setVerticalGroup(
             totalPeoplePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,11 +191,6 @@ public class DashBoard extends javax.swing.JPanel {
             .addGroup(dataOverviewPanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(dataOverviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dataOverviewPanelLayout.createSequentialGroup()
-                        .addGroup(dataOverviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(heading2)
-                            .addComponent(headingHelper2))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataOverviewPanelLayout.createSequentialGroup()
                         .addGroup(dataOverviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(avgSalaryLabel)
@@ -206,8 +201,12 @@ public class DashBoard extends javax.swing.JPanel {
                             .addComponent(avgCreditScore, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                             .addComponent(marriedPeople, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                             .addComponent(avgSalary, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)))
-                .addContainerGap())
+                        .addGap(18, 18, 18))
+                    .addGroup(dataOverviewPanelLayout.createSequentialGroup()
+                        .addGroup(dataOverviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(heading2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(headingHelper2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+                        .addContainerGap(111, Short.MAX_VALUE))))
         );
         dataOverviewPanelLayout.setVerticalGroup(
             dataOverviewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,9 +277,10 @@ public class DashBoard extends javax.swing.JPanel {
                         .addComponent(addPersonQuickBtn)
                         .addGap(18, 18, 18)
                         .addComponent(listPeopleQuickBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(heading3)
-                    .addComponent(headingHelper3))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(quickActionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(headingHelper3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                        .addComponent(heading3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         quickActionsPanelLayout.setVerticalGroup(
             quickActionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

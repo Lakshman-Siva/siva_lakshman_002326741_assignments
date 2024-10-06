@@ -227,6 +227,26 @@ public class ViewPerson extends javax.swing.JPanel {
 			showMessage("Work Phone Number is mandatory.");
 			return false;
 		}
+				
+		try {
+			if(Double.parseDouble(salary.getText()) <= 0) {
+				showMessage("Salary cannot be less than 0. Please try again!");
+				return false;
+			}
+		} catch (Exception ex) {
+			showMessage("Please enter a valid salary!");
+			return false;
+		}
+		
+		try {
+			if(Long.parseLong(ssn.getText()) <= 100000000) {
+				showMessage("Please enter a valid Social Security Number");
+				return false;
+			}
+		} catch (Exception ex) {
+				showMessage("Please enter a valid Social Security Number");
+			return false;
+		}
 		
 		// If all mandatory fields are filled
 		return true;
@@ -234,8 +254,8 @@ public class ViewPerson extends javax.swing.JPanel {
 	}
 	
 	public void setTextFields() {
-		DefaultComboBoxModel<String> stateModel = new DefaultComboBoxModel<>();
-		DefaultComboBoxModel<String> cityModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> stateModel = (DefaultComboBoxModel<String>) homeState.getModel();
+		DefaultComboBoxModel<String> cityModel = (DefaultComboBoxModel<String>) homeCity.getModel();
 		stateModel.addElement(person.getHomeState());
 		cityModel.addElement(person.getHomeCity());
 		
@@ -255,12 +275,14 @@ public class ViewPerson extends javax.swing.JPanel {
 		homeUnit.setText(person.getHomeUnitNumber());
 		homeCountry.setSelectedItem(person.getHomeCountry());
 		homeState.setModel(stateModel);
+		homeState.setSelectedItem(person.getHomeState());
 		homeCity.setModel(cityModel);
+		homeCity.setSelectedItem(person.getHomeCity());
 		homeZip.setText(person.getHomeZipCode());
 		homePhone.setText(person.getHomePhoneNumber());
 		
-		stateModel = new DefaultComboBoxModel<>();
-		cityModel = new DefaultComboBoxModel<>();
+		stateModel = (DefaultComboBoxModel<String>) workState.getModel();
+		cityModel = (DefaultComboBoxModel<String>) workCity.getModel();
 		stateModel.addElement(person.getWorkState());
 		cityModel.addElement(person.getWorkCity());
 		
@@ -270,7 +292,9 @@ public class ViewPerson extends javax.swing.JPanel {
 		workUnit.setText(person.getWorkUnitNumber());
 		workCountry.setSelectedItem(person.getWorkCountry());
 		workState.setModel(stateModel);
+		workState.setSelectedItem(person.getWorkState());
 		workCity.setModel(cityModel);
+		workCity.setSelectedItem(person.getWorkCity());
 		workZip.setText(person.getWorkZipCode());
 		workPhone.setText(person.getWorkPhoneNumber());
 	}
@@ -529,7 +553,7 @@ public class ViewPerson extends javax.swing.JPanel {
 
         homeState.setBackground(new java.awt.Color(255, 255, 255));
         homeState.setForeground(new java.awt.Color(0, 0, 0));
-        homeState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        homeState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
         homeState.setToolTipText("Select the State");
         homeState.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
         homeState.addItemListener(new java.awt.event.ItemListener() {
@@ -540,7 +564,7 @@ public class ViewPerson extends javax.swing.JPanel {
 
         homeCity.setBackground(new java.awt.Color(255, 255, 255));
         homeCity.setForeground(new java.awt.Color(0, 0, 0));
-        homeCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        homeCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "New York City", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Fort Worth", "Charlotte", "Indianapolis", "Seattle", "Denver", "Washington, D.C.", "Boston", "El Paso", "Detroit", "Nashville", "Portland", "Oklahoma City", "Las Vegas", "Louisville", "Baltimore", "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Kansas City", "Mesa", "Virginia Beach", "Atlanta", "Colorado Springs", "Omaha", "Raleigh", "Miami", "Cleveland", "Tulsa", "Oakland", "Minneapolis", "Wichita", "Arlington", "New Orleans", "Bakersfield" }));
         homeCity.setToolTipText("Select the City");
         homeCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
         homeCity.addItemListener(new java.awt.event.ItemListener() {
@@ -873,7 +897,7 @@ public class ViewPerson extends javax.swing.JPanel {
 
         workState.setBackground(new java.awt.Color(255, 255, 255));
         workState.setForeground(new java.awt.Color(0, 0, 0));
-        workState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        workState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" }));
         workState.setToolTipText("Select the State");
         workState.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
         workState.addItemListener(new java.awt.event.ItemListener() {
@@ -888,7 +912,7 @@ public class ViewPerson extends javax.swing.JPanel {
 
         workCity.setBackground(new java.awt.Color(255, 255, 255));
         workCity.setForeground(new java.awt.Color(0, 0, 0));
-        workCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        workCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "New York City", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Fort Worth", "Charlotte", "Indianapolis", "Seattle", "Denver", "Washington, D.C.", "Boston", "El Paso", "Detroit", "Nashville", "Portland", "Oklahoma City", "Las Vegas", "Louisville", "Baltimore", "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Kansas City", "Mesa", "Virginia Beach", "Atlanta", "Colorado Springs", "Omaha", "Raleigh", "Miami", "Cleveland", "Tulsa", "Oakland", "Minneapolis", "Wichita", "Arlington", "New Orleans", "Bakersfield" }));
         workCity.setToolTipText("Select the City");
         workCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
         workCity.addItemListener(new java.awt.event.ItemListener() {

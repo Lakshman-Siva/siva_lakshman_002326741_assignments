@@ -129,10 +129,10 @@
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="count" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="heading1" min="-2" max="-2" attributes="0"/>
-                              <Component id="headingHelper1" min="-2" max="-2" attributes="0"/>
+                              <Component id="heading1" alignment="0" min="-2" pref="161" max="-2" attributes="0"/>
+                              <Component id="headingHelper1" min="-2" pref="238" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -210,13 +210,6 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="heading2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="headingHelper2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="avgSalaryLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -231,8 +224,14 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="heading2" max="32767" attributes="0"/>
+                                      <Component id="headingHelper2" pref="224" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="111" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -383,10 +382,12 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="listPeopleQuickBtn" min="-2" pref="140" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="heading3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="headingHelper3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="headingHelper3" alignment="0" pref="160" max="32767" attributes="0"/>
+                                  <Component id="heading3" alignment="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                          <EmptySpace pref="26" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
