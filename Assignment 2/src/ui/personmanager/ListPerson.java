@@ -5,6 +5,7 @@
 package ui.personmanager;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -280,10 +281,18 @@ public class ListPerson extends javax.swing.JPanel {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        mainFramePanel.remove(this);
+	mainFramePanel.remove(this);
+		
+	try {
+		Component[] panelStack = mainFramePanel.getComponents();
+		JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
 
-        CardLayout layout = (CardLayout) mainFramePanel.getLayout();
-        layout.previous(mainFramePanel);
+		DashBoard dashBoard = (DashBoard) lastPanel;
+		dashBoard.setDashboardDetails();
+	} catch (Exception e) {}
+
+	CardLayout layout = (CardLayout) mainFramePanel.getLayout();
+	layout.previous(mainFramePanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void viewSelectedPersonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSelectedPersonBtnActionPerformed

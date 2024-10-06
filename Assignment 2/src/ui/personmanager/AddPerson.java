@@ -6,8 +6,18 @@ package ui.personmanager;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import model.Person;
 import model.PersonDirectory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -17,6 +27,7 @@ public class AddPerson extends javax.swing.JPanel {
 	
 	private JPanel mainFramePanel;
 	private PersonDirectory personDirectory;
+	private String token;
 
 	/**
 	 * Creates new form AddPerson
@@ -27,6 +38,171 @@ public class AddPerson extends javax.swing.JPanel {
 		
 		personDirectory = pd;
 		mainFramePanel = panel;
+		
+		try {
+			getToken();
+		} catch (Exception ex) {}
+		
+		System.out.println(token);
+	}
+	
+	private void getToken() throws Exception {
+		URL url = new URL("https://www.universal-tutorial.com/api/getaccesstoken");
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+
+		// Set required headers
+		con.setRequestProperty("Accept", "application/json");
+		con.setRequestProperty("api-token", "2EVX43Xlw7Cs6_0WkgjGbKEqv9Onnm6wSG2x4SptBKGE1qUeETg36toInDWG_GUggN8");
+		con.setRequestProperty("user-email", "slakshman664@gmail.com");
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuilder response = new StringBuilder();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		
+		System.out.println(response.toString());
+		JSONObject jsonResponse = new JSONObject(response.toString());
+		token = jsonResponse.getString("auth_token");
+	}
+	
+	private Object sendGetRequest(String apiUrl) throws Exception {
+		URL url = new URL(apiUrl);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+
+		// Set required headers
+		con.setRequestProperty("Accept", "application/json");
+		con.setRequestProperty("Authorization",  "Bearer " + token);
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuilder response = new StringBuilder();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		
+		System.out.println(response.toString());
+		
+		return response;
+	}
+	
+	private boolean isEmpty(Object field) {
+		return field == null || field.toString().trim().isEmpty();
+	}
+
+	private void showMessage(String message) {
+		JOptionPane.showMessageDialog(null, message, "Field Validation", JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public  boolean isFormValid() {
+		// Personal Info Validation
+		if (isEmpty(firstName.getText())) {
+			showMessage("First Name is mandatory.");
+			return false;
+		}
+		if (isEmpty(lastName.getText())) {
+			showMessage("Last Name is mandatory.");
+			return false;
+		}
+		if (isEmpty(dob.getDate())) {
+			showMessage("Date is mandatory.");
+			return false;
+		}
+		if (isEmpty(ssn.getText())) {
+			showMessage("Social Security Number is mandatory.");
+			return false;
+		}
+		if (isEmpty(age.getValue())) {
+			showMessage("Age is mandatory.");
+			return false;
+		}
+		if (isEmpty(salary.getText())) {
+			showMessage("Salary is mandatory.");
+			return false;
+		}
+		if (isEmpty(creditScore.getValue())) {
+			showMessage("Social Security Number is mandatory.");
+			return false;
+		}
+		
+		// Home address validation
+		if (isEmpty(homeAddressLine1.getText())) {
+			showMessage("Home Address Line 1 is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeAddressLine2.getText())) {
+			showMessage("Home Address Line 2 is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeUnit.getText())) {
+			showMessage("Home Unit Number is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeZip.getText())) {
+			showMessage("Home Zip Code is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeCountry.getSelectedItem())) {
+			showMessage("Home Country is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeState.getSelectedItem())) {
+			showMessage("Home State is mandatory.");
+			return false;
+		}
+		if (isEmpty(homeCity.getSelectedItem())) {
+			showMessage("Home City is mandatory.");
+			return false;
+		}
+		if (isEmpty(homePhone.getText())) {
+			showMessage("Home Phone Number is mandatory.");
+			return false;
+		}
+		
+		// Work address validation
+		if (isEmpty(workAddressLine1.getText())) {
+			showMessage("Work Address Line 1 is mandatory.");
+			return false;
+		}
+		if (isEmpty(workAddressLine2.getText())) {
+			showMessage("Work Address Line 2 is mandatory.");
+			return false;
+		}
+		if (isEmpty(workUnit.getText())) {
+			showMessage("Work Unit Number is mandatory.");
+			return false;
+		}
+		if (isEmpty(workZip.getText())) {
+			showMessage("Work Zip Code is mandatory.");
+			return false;
+		}
+		if (isEmpty(workCountry.getSelectedItem())) {
+			showMessage("Work Country is mandatory.");
+			return false;
+		}
+		if (isEmpty(workState.getSelectedItem())) {
+			showMessage("Work State is mandatory.");
+			return false;
+		}
+		if (isEmpty(workCity.getSelectedItem())) {
+			showMessage("Work City is mandatory.");
+			return false;
+		}
+		if (isEmpty(workPhone.getText())) {
+			showMessage("Work Phone Number is mandatory.");
+			return false;
+		}
+		
+		// If all mandatory fields are filled
+		return true;
+		
 	}
 
 	/**
@@ -82,7 +258,7 @@ public class AddPerson extends javax.swing.JPanel {
         salary = new javax.swing.JTextField();
         creditScoreLabel = new javax.swing.JLabel();
         creditScore = new javax.swing.JSpinner();
-        jPanel1 = new javax.swing.JPanel();
+        workAddressPanel = new javax.swing.JPanel();
         workAddressTitle = new javax.swing.JLabel();
         workAddressHelper = new javax.swing.JLabel();
         workAddressLine1Label = new javax.swing.JLabel();
@@ -234,20 +410,37 @@ public class AddPerson extends javax.swing.JPanel {
 
         homeCountry.setBackground(new java.awt.Color(255, 255, 255));
         homeCountry.setForeground(new java.awt.Color(0, 0, 0));
-        homeCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        homeCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" }));
         homeCountry.setSelectedItem(" -- Select Country --");
         homeCountry.setToolTipText("Select the Country");
         homeCountry.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
+        homeCountry.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                homeCountryItemStateChanged(evt);
+            }
+        });
+        homeCountry.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                homeCountryInputMethodTextChanged(evt);
+            }
+        });
 
         homeState.setBackground(new java.awt.Color(255, 255, 255));
         homeState.setForeground(new java.awt.Color(0, 0, 0));
-        homeState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        homeState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
         homeState.setToolTipText("Select the State");
         homeState.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
+        homeState.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                homeStateItemStateChanged(evt);
+            }
+        });
 
         homeCity.setBackground(new java.awt.Color(255, 255, 255));
         homeCity.setForeground(new java.awt.Color(0, 0, 0));
-        homeCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        homeCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
         homeCity.setToolTipText("Select the City");
         homeCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
 
@@ -344,11 +537,10 @@ public class AddPerson extends javax.swing.JPanel {
                                 .addComponent(homeCountryLabel))
                             .addComponent(homeCityLabel))
                         .addGap(34, 34, 34)))
-                .addGap(18, 18, 18)
                 .addComponent(homePhoneLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(homePhone, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         formContainerPanel.add(homeAddressPanel, java.awt.BorderLayout.CENTER);
@@ -516,9 +708,9 @@ public class AddPerson extends javax.swing.JPanel {
 
         formContainerPanel.add(personalInfoPanel, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(238, 238, 240), 2, true));
-        jPanel1.setPreferredSize(new java.awt.Dimension(650, 520));
+        workAddressPanel.setBackground(new java.awt.Color(255, 255, 255));
+        workAddressPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(238, 238, 240), 2, true));
+        workAddressPanel.setPreferredSize(new java.awt.Dimension(650, 520));
 
         workAddressTitle.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         workAddressTitle.setForeground(new java.awt.Color(0, 0, 0));
@@ -564,9 +756,14 @@ public class AddPerson extends javax.swing.JPanel {
 
         workCountry.setBackground(new java.awt.Color(255, 255, 255));
         workCountry.setForeground(new java.awt.Color(0, 0, 0));
-        workCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        workCountry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua & Deps", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Rep", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Congo {Democratic Rep}", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland {Republic}", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea North", "Korea South", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar, {Burma}", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russian Federation", "Rwanda", "St Kitts & Nevis", "St Lucia", "Saint Vincent & the Grenadines", "Samoa", "San Marino", "Sao Tome & Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe" }));
         workCountry.setToolTipText("Select the Country");
         workCountry.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
+        workCountry.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                workCountryItemStateChanged(evt);
+            }
+        });
 
         workStateLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         workStateLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -574,9 +771,14 @@ public class AddPerson extends javax.swing.JPanel {
 
         workState.setBackground(new java.awt.Color(255, 255, 255));
         workState.setForeground(new java.awt.Color(0, 0, 0));
-        workState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        workState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
         workState.setToolTipText("Select the State");
         workState.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
+        workState.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                workStateItemStateChanged(evt);
+            }
+        });
 
         workCityLabel.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         workCityLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -584,7 +786,7 @@ public class AddPerson extends javax.swing.JPanel {
 
         workCity.setBackground(new java.awt.Color(255, 255, 255));
         workCity.setForeground(new java.awt.Color(0, 0, 0));
-        workCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        workCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
         workCity.setToolTipText("Select the City");
         workCity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 238, 240)));
 
@@ -621,21 +823,21 @@ public class AddPerson extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout workAddressPanelLayout = new javax.swing.GroupLayout(workAddressPanel);
+        workAddressPanel.setLayout(workAddressPanelLayout);
+        workAddressPanelLayout.setHorizontalGroup(
+            workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workAddressPanelLayout.createSequentialGroup()
+                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(workAddressPanelLayout.createSequentialGroup()
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(workUnitLabel)
                                     .addComponent(workUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(workZip, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(workZipLabel)))
                             .addComponent(workAddressLine2Label)
@@ -643,38 +845,38 @@ public class AddPerson extends javax.swing.JPanel {
                             .addComponent(workAddressLine1Label)
                             .addComponent(workAddressTitle)
                             .addComponent(workAddressLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(workAddressPanelLayout.createSequentialGroup()
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                                         .addComponent(workCountryLabel)
                                         .addGap(152, 152, 152))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, workAddressPanelLayout.createSequentialGroup()
                                         .addComponent(workCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(workStateLabel)
                                     .addComponent(workState, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(workCityLabel)
                                     .addComponent(workCity, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(workAddressHelper, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(workAddressPanelLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(workPhoneLabel)
                                     .addComponent(workPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                         .addGap(211, 211, 211)
                         .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        workAddressPanelLayout.setVerticalGroup(
+            workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(workAddressPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(workAddressHelper))
                     .addComponent(workAddressTitle))
@@ -683,27 +885,27 @@ public class AddPerson extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(workAddressLine1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                         .addComponent(workStateLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(workCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(workState, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(workCity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(workAddressPanelLayout.createSequentialGroup()
+                        .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(workAddressPanelLayout.createSequentialGroup()
                                 .addComponent(workAddressLine2Label)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(workAddressLine2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(workAddressPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                                         .addComponent(workZipLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(workZip, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(workAddressPanelLayout.createSequentialGroup()
                                         .addComponent(workUnitLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(workUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -711,16 +913,15 @@ public class AddPerson extends javax.swing.JPanel {
                                 .addComponent(workCountryLabel))
                             .addComponent(workCityLabel))
                         .addGap(34, 34, 34)))
-                .addGap(18, 18, 18)
                 .addComponent(workPhoneLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(workPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        formContainerPanel.add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        formContainerPanel.add(workAddressPanel, java.awt.BorderLayout.PAGE_END);
 
         mainPanel.add(formContainerPanel);
 
@@ -743,6 +944,14 @@ public class AddPerson extends javax.swing.JPanel {
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
 	mainFramePanel.remove(this);
+	
+	try {
+		Component[] panelStack = mainFramePanel.getComponents();
+		JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
+
+		DashBoard dashBoard = (DashBoard) lastPanel;
+		dashBoard.setDashboardDetails();
+	} catch (Exception e) {}
 	
 	CardLayout layout = (CardLayout) mainFramePanel.getLayout();
 	layout.previous(mainFramePanel);
@@ -767,8 +976,178 @@ public class AddPerson extends javax.swing.JPanel {
     }//GEN-LAST:event_submitBtnMouseExited
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        // TODO add your handling code here:
+	//Form validation for mandatory fields
+	if(!isFormValid()) {
+		return;
+	}
+	
+	Person person = personDirectory.addPerson();
+	
+	// Personal Info
+	person.setFirstName(firstName.getText());
+	person.setLastName(lastName.getText());
+	person.setDateOfBirth(dob.getDate());
+	person.setAge((int) age.getValue());
+	person.setIsMarried(isMarried.isSelected());
+	person.setSocialSecurityNumber(Long.parseLong(ssn.getText()));
+	person.setSalary(Double.parseDouble(salary.getText()));
+	person.setCreditScore((int) creditScore.getValue());
+	
+	// Home Address
+	person.setHomeAddressLine1(homeAddressLine1.getText());
+	person.setHomeAddressLine2(homeAddressLine2.getText());
+	person.setHomeUnitNumber(homeUnit.getText());
+	person.setHomeCountry(homeCountry.getSelectedItem().toString());
+	person.setHomeState(homeState.getSelectedItem().toString());
+	person.setHomeCity(homeCity.getSelectedItem().toString());
+	person.setHomePhoneNumber(homePhone.getText());
+	person.setHomeZipCode(homeZip.getText());
+	
+	// Work Address
+	person.setWorkAddressLine1(workAddressLine1.getText());
+	person.setWorkAddressLine2(workAddressLine2.getText());
+	person.setWorkUnitNumber(workUnit.getText());
+	person.setWorkCountry(workCountry.getSelectedItem().toString());
+	person.setWorkState(workState.getSelectedItem().toString());
+	person.setWorkCity(workCity.getSelectedItem().toString());
+	person.setWorkPhoneNumber(workPhone.getText());
+	person.setWorkZipCode(workZip.getText());
+	
+	JOptionPane.showMessageDialog(this, "Person information saved successfully!", "Form Saved", JOptionPane.INFORMATION_MESSAGE);
+
+	//Clear Fields
+	
+	// Personal Info Fields
+	firstName.setText("");
+	lastName.setText("");
+	dob.setDate(null);
+	isMarried.setSelected(false);
+	age.setValue(1);
+	ssn.setText("");
+	creditScore.setValue(1);
+	salary.setText("");
+
+	// Home Address Fields
+	homeAddressLine1.setText("");
+	homeAddressLine2.setText("");
+	homeUnit.setText("");
+	homeCountry.setSelectedItem("-- Select --");
+	homeState.setSelectedItem("-- Select --");
+	homeCity.setSelectedItem("-- Select --");
+	homeZip.setText("");
+	homePhone.setText("");
+
+	// Work Address Fields
+	workAddressLine1.setText("");
+	workAddressLine2.setText("");
+	workUnit.setText("");
+	workCountry.setSelectedItem("-- Select --");
+	workState.setSelectedItem("-- Select --");
+	workCity.setSelectedItem("-- Select --");
+	workZip.setText("");
+	workPhone.setText("");
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void homeCountryInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_homeCountryInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_homeCountryInputMethodTextChanged
+
+    private void homeCountryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_homeCountryItemStateChanged
+        // TODO add your handling code here:
+	String homeCountryString = homeCountry.getSelectedItem().toString();
+	
+	String url = "https://www.universal-tutorial.com/api/states/" + homeCountryString;
+	try {
+		JSONArray object = new JSONArray(sendGetRequest(url).toString());
+		DefaultComboBoxModel<String> stateModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> cityModel = new DefaultComboBoxModel<>();
+		stateModel.addElement("-- Select --");
+		cityModel.addElement("-- Select --");
+		
+		for(int i=0;i<object.length();i++) {
+			JSONObject stateObject = object.getJSONObject(i);
+			String stateName = stateObject.getString("state_name");
+			stateModel.addElement(stateName);
+		}
+		
+		homeState.setModel(stateModel);
+		homeCity.setModel(cityModel);
+		
+	} catch (Exception ex) {
+		System.out.println(ex.toString());
+	}
+    }//GEN-LAST:event_homeCountryItemStateChanged
+
+    private void homeStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_homeStateItemStateChanged
+        // TODO add your handling code here:
+	String homeStateString = homeState.getSelectedItem().toString();
+	
+	String url = "https://www.universal-tutorial.com/api/cities/" + homeStateString;
+	try {
+		JSONArray object = new JSONArray(sendGetRequest(url).toString());
+		DefaultComboBoxModel<String> cityModel = new DefaultComboBoxModel<>();
+		cityModel.addElement("-- Select --");
+		
+		for(int i=0;i<object.length();i++) {
+			JSONObject stateObject = object.getJSONObject(i);
+			String stateName = stateObject.getString("city_name");
+			cityModel.addElement(stateName);
+		}
+		
+		homeCity.setModel(cityModel);
+		
+	} catch (Exception ex) {
+		System.out.println(ex.toString());
+	}
+    }//GEN-LAST:event_homeStateItemStateChanged
+
+    private void workCountryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_workCountryItemStateChanged
+        // TODO add your handling code here:
+	String workCountryString = workCountry.getSelectedItem().toString();
+	
+	String url = "https://www.universal-tutorial.com/api/states/" + workCountryString;
+	try {
+		JSONArray object = new JSONArray(sendGetRequest(url).toString());
+		DefaultComboBoxModel<String> stateModel = new DefaultComboBoxModel<>();
+		DefaultComboBoxModel<String> cityModel = new DefaultComboBoxModel<>();
+		stateModel.addElement("-- Select --");
+		cityModel.addElement("-- Select --");
+		
+		for(int i=0;i<object.length();i++) {
+			JSONObject stateObject = object.getJSONObject(i);
+			String stateName = stateObject.getString("state_name");
+			stateModel.addElement(stateName);
+		}
+		
+		workState.setModel(stateModel);
+		
+	} catch (Exception ex) {
+		System.out.println(ex.toString());
+	}
+    }//GEN-LAST:event_workCountryItemStateChanged
+
+    private void workStateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_workStateItemStateChanged
+        // TODO add your handling code here:
+	String workStateString = workState.getSelectedItem().toString();
+	
+	String url = "https://www.universal-tutorial.com/api/cities/" + workStateString;
+	try {
+		JSONArray object = new JSONArray(sendGetRequest(url).toString());
+		DefaultComboBoxModel<String> cityModel = new DefaultComboBoxModel<>();
+		cityModel.addElement("-- Select --");
+		
+		for(int i=0;i<object.length();i++) {
+			JSONObject stateObject = object.getJSONObject(i);
+			String stateName = stateObject.getString("city_name");
+			cityModel.addElement(stateName);
+		}
+		
+		workCity.setModel(cityModel);
+		
+	} catch (Exception ex) {
+		System.out.println(ex.toString());
+	}
+    }//GEN-LAST:event_workStateItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -803,7 +1182,6 @@ public class AddPerson extends javax.swing.JPanel {
     private javax.swing.JTextField homeZip;
     private javax.swing.JLabel homeZipLabel;
     private javax.swing.JCheckBox isMarried;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastName;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JPanel mainPanel;
@@ -823,6 +1201,7 @@ public class AddPerson extends javax.swing.JPanel {
     private javax.swing.JLabel workAddressLine1Label;
     private javax.swing.JTextField workAddressLine2;
     private javax.swing.JLabel workAddressLine2Label;
+    private javax.swing.JPanel workAddressPanel;
     private javax.swing.JLabel workAddressTitle;
     private javax.swing.JComboBox<String> workCity;
     private javax.swing.JLabel workCityLabel;

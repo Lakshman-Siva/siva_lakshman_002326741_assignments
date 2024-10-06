@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -69,51 +70,65 @@ public class PersonDirectory {
 			"Birch St", "Willow Rd", "Spruce Ln", "Ash Dr", "Hickory Pl"
 		};
 
-		String[] cities = {
-			"New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
-			"Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose",
-			"Austin", "Jacksonville", "San Francisco", "Columbus", "Fort Worth"
-		};
-
-		String[] states = {
-			"CA", "TX", "NY", "FL", "WA",
-			"IL", "OH", "PA", "AZ", "NV"
-		};
-
 		String[] zipCodes = {
 			"90001", "10001", "73301", "33101", "98001",
 			"60601", "43215", "75201", "95101", "84101"
 		};
 
+		// Array of famous countries
 		String[] countries = {
-			"USA", "Canada", "UK", "Australia", "Germany",
-			"France", "India", "Brazil", "Mexico", "Japan"
+			"India", "India", "India", "India", "India", 
+			"United States", "United States", "United States", "United States", "United States", 
+			"Japan", "Japan", "Japan", 
+			"Canada", "Canada"
 		};
 
+		// Array of corresponding famous states/provinces
+		String[] states = {
+			"Tamil Nadu", "Maharashtra", "Karnataka", "West Bengal", "Delhi", 
+			"California", "New York", "Texas", "Florida", "Nevada", 
+			"Tokyo", "Osaka", "Hokkaido", 
+			"Ontario", "Ontario"
+		};
+
+		// Array of corresponding famous cities
+		String[] cities = {
+			"Chennai", "Mumbai", "Bangalore", "Kolkata", "New Delhi", 
+			"Los Angeles", "New York City", "Houston", "Miami", "Las Vegas", 
+			"Tokyo City", "Osaka City", "Sapporo", 
+			"Toronto", "Almonte"
+		};
+		
 		for (int i = 0; i < names.length; i++) {
 			Person person = addPerson();
 			person.setFirstName(names[i][0]);
 			person.setLastName(names[i][1]);
 			person.setDateOfBirth(birthDates[i]);
+			person.setAge(random.nextInt(18, 60)  + 1);
+			person.setSocialSecurityNumber(random.nextInt(100000000, 999999999));
 			person.setIsMarried(isMarriedStatus[i]);
 			person.setSalary(salaries[i]);
 			person.setCreditScore(creditScores[i]);
 
 			// Set random home address
-			person.setHomeAddressLine1((random.nextInt(9999) + 1) + " " + streets[random.nextInt(streets.length)]);
-			person.setHomeCity(cities[random.nextInt(cities.length)]);
-			person.setHomeState(states[random.nextInt(states.length)]);
+			person.setHomeAddressLine1((random.nextInt(9999) + 1) + "");
+			person.setHomeAddressLine2(streets[random.nextInt(streets.length)]);
+			person.setHomeUnitNumber(random.nextInt(100) + "");
+			person.setHomeCity(cities[i]);
+			person.setHomeState(states[i]);
 			person.setHomeZipCode(zipCodes[random.nextInt(zipCodes.length)]);
 			person.setHomePhoneNumber("555-" + String.format("%04d", random.nextInt(10000)));
-			person.setHomeCountry(countries[random.nextInt(countries.length)]);
+			person.setHomeCountry(countries[i]);
 
 			// Set random work address
-			person.setWorkAddressLine1((random.nextInt(9999) + 1) + " " + streets[random.nextInt(streets.length)]);
-			person.setWorkCity(cities[random.nextInt(cities.length)]);
-			person.setWorkState(states[random.nextInt(states.length)]);
+			person.setWorkAddressLine1((random.nextInt(9999) + 1) + "");
+			person.setWorkAddressLine2(streets[random.nextInt(streets.length)]);
+			person.setWorkUnitNumber(random.nextInt(100) + "");
+			person.setWorkCity(cities[i]);
+			person.setWorkState(states[i]);
 			person.setWorkZipCode(zipCodes[random.nextInt(zipCodes.length)]);
 			person.setWorkPhoneNumber("555-" + String.format("%04d", random.nextInt(10000)));
-			person.setWorkCountry(countries[random.nextInt(countries.length)]);
+			person.setWorkCountry(countries[i]);
 		}
 	}
 	
@@ -141,5 +156,25 @@ public class PersonDirectory {
 			}
 		}
 		return null;
+	}
+	
+	public HashMap<String, Integer> getDashboardDetails() {
+		HashMap<String, Integer> details = new HashMap<>();
+		
+		int count = 0, credit =0, salary = 0;
+		for(Person person : peoples) {
+			if(person.isIsMarried()) {
+				count++;
+			}
+			credit += person.getCreditScore();
+			salary += person.getSalary();
+		}
+		
+		details.put("total_people",  peoples.size());
+		details.put("married_count",  count);
+		details.put("avg_salary",  salary/peoples.size());
+		details.put("avg_credit",  credit/peoples.size());
+		
+		return details;
 	}
 }
