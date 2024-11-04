@@ -27,6 +27,10 @@ public class StudentProfile {
         employmenthistory = new EmploymentHistroy();
     }
 
+    public String getStudentId() {
+        return person.getPersonId();
+    }
+
     public boolean isMatch(String id) {
         return person.getPersonId().equals(id);
     }

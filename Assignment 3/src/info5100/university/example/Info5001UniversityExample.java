@@ -7,7 +7,9 @@ package info5100.university.example;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import info5100.university.example.College.College;
 import info5100.university.example.CourseCatalog.Course;
@@ -21,6 +23,7 @@ import info5100.university.example.Persona.Person;
 import info5100.university.example.Persona.PersonDirectory;
 import info5100.university.example.Persona.StudentDirectory;
 import info5100.university.example.Persona.StudentProfile;
+import info5100.university.example.Persona.Faculty.FacultyProfile;
 
 /**
  *
@@ -34,6 +37,45 @@ public class Info5001UniversityExample {
      * @param args the command line arguments
      */
 
+    public static void populateCourseLoad(Department dept) {
+        ArrayList<StudentProfile> sd = dept.getStudentDirectory().getStudentList();
+        ArrayList<Course> courses = dept.getCourseCatalog().getCourseList();
+        String semesters[] = {"Fall 2024", "Spring 2025", "Fall 2025"};
+
+        for (StudentProfile sp : sd) {
+            for (String sem : semesters) {
+                sp.newCourseLoad(sem);
+                Set<Integer> usedCourses = new HashSet<>();
+                for (int i = 0; i < 3; i++) {
+                    Integer courseCount = random.nextInt(courses.size());
+                    while (usedCourses.contains(courseCount)) {
+                        courseCount = random.nextInt(courses.size());
+                    }
+
+                    dept.RegisterForAClass(sp.getStudentId(), courses.get(courseCount).getCOurseNumber(), sem);
+                }
+            }
+        }
+    }
+
+    public static void populateCourseSchedule(Department dept) {
+        String semesters[] = {"Fall 2024", "Spring 2025", "Fall 2025"};
+        ArrayList<Course> courses = dept.getCourseCatalog().getCourseList();
+        ArrayList<FacultyProfile> faculty = dept.getFacultyDirectory().getTeacherList();
+
+        for (String s : semesters) {
+            CourseSchedule cs = dept.newCourseSchedule(s);
+
+            for (Course c : courses) {
+                CourseOffer co = cs.newCourseOffer(c.getCOurseNumber());
+                FacultyProfile fp = faculty.get(random.nextInt(faculty.size()));
+                co.AssignAsTeacher(fp);
+                co.setFacultyRating(random.nextInt(5) + 1);
+                co.generatSeats(15);
+            }
+        }
+    }
+
     public static void populateEmployers(Department dept) {
         String[] employers = {"Google", "Amazon", "Facebook", "Apple", "Microsoft", "Oracle"};
         for (String e : employers) {
@@ -46,7 +88,6 @@ public class Info5001UniversityExample {
 
         for (int i = 0; i < 100; i++) {
             Person p = dept.addPerson("Person" + String.valueOf(dept.toString().hashCode() + 1));
-            dept.addEmployer("Employer "+String.valueOf(dept.toString().hashCode() + 1));
             people.add(p);
         }
         for (int i = 0; i < 10; i++) {
@@ -70,7 +111,6 @@ public class Info5001UniversityExample {
         for(int i=rand; i <= rand+5; i++){
             dept.addElectiveCourse(courseList.get(i));
         }
-
     }
     
 
@@ -93,11 +133,19 @@ public class Info5001UniversityExample {
             populateCourse(department, courses[i]);
             populatePeople(department);
             populateEmployers(department);
-
-
+            populateCourseSchedule(department);
+            populateCourseLoad(department);
         }
 
-    
+        
+        System.out.println("Data Population Completed");
+
+        while(true) {
+            System.out.println("")
+        }
+
+
+
     }
 
 }

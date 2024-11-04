@@ -9,6 +9,7 @@ import info5100.university.example.CourseCatalog.Course;
 import info5100.university.example.Persona.Faculty.FacultyAssignment;
 import info5100.university.example.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -24,10 +25,14 @@ public class CourseOffer {
         course = c;
         seatlist = new ArrayList();
     }
-     
+    
     public void AssignAsTeacher(FacultyProfile fp) {
 
         facultyassignment = new FacultyAssignment(fp, this);
+    }
+
+    public void setFacultyRating(double r) {
+        facultyassignment.seProfRating(r);
     }
 
     public FacultyProfile getFacultyProfile() {

@@ -25,6 +25,10 @@ public class FacultyDirectory {
 
     }
 
+    public ArrayList<FacultyProfile> getTeacherList() {
+        return teacherlist;
+    }
+
     public FacultyProfile newFacultyProfile(Person p) {
 
         FacultyProfile sp = new FacultyProfile(p);
