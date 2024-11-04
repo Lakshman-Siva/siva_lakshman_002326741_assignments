@@ -34,6 +34,13 @@ public class Info5001UniversityExample {
      * @param args the command line arguments
      */
 
+    public static void populateEmployers(Department dept) {
+        String[] employers = {"Google", "Amazon", "Facebook", "Apple", "Microsoft", "Oracle"};
+        for (String e : employers) {
+            dept.addEmployer(e);
+        }
+    }
+
     public static void populatePeople(Department dept) {
         ArrayList<Person> people = new ArrayList<>();
 
@@ -85,6 +92,8 @@ public class Info5001UniversityExample {
             college.addDepartmentAccount(new DepartmentAccount(department));
             populateCourse(department, courses[i]);
             populatePeople(department);
+            populateEmployers(department);
+
 
         }
 
