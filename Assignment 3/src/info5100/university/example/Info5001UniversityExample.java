@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 import info5100.university.example.College.College;
@@ -17,6 +18,7 @@ import info5100.university.example.CourseCatalog.CourseCatalog;
 import info5100.university.example.CourseSchedule.CourseLoad;
 import info5100.university.example.CourseSchedule.CourseOffer;
 import info5100.university.example.CourseSchedule.CourseSchedule;
+import info5100.university.example.CourseSchedule.SeatAssignment;
 import info5100.university.example.Department.Department;
 import info5100.university.example.Department.DepartmentAccount;
 import info5100.university.example.Persona.Person;
@@ -117,6 +119,7 @@ public class Info5001UniversityExample {
     public static void main(String[] args) {
         // TODO code application logic here
         random  = new Random();
+        Scanner scanner = new Scanner(System.in);
 
         College college = new College("College of Engineering");
 
@@ -141,11 +144,58 @@ public class Info5001UniversityExample {
         System.out.println("Data Population Completed");
 
         while(true) {
-            System.out.println("")
+            System.out.println("Generate Report:");
+            for(int i=1; i<=departmentNames.length; i++){
+                System.out.println(i + ". " + departmentNames[i]);
+            }
+            System.out.println(departmentNames.length+1 + ". Exit");
+            System.out.print("Enter the department number: ");
+            int deptNum = scanner.nextInt();
+
+            if(deptNum+1 == departmentNames.length){
+                break;
+            } else if (deptNum+1 > departmentNames.length || deptNum < 0){
+                System.out.println("Invalid department number.");
+                continue;
+            }
+            Department department = college.getDepartments().get(deptNum-1);
+            ArrayList<StudentProfile> students = department.getStudentDirectory().getStudentList();
+
+            System.out.println("Choose the semester:");
+            String semesters[] = {"Fall 2024", "Spring 2025", "Fall 2025"};
+            
+            for(int i=0; i<semesters.length; i++){
+                System.out.println(i+1 + ". " + semesters[i]);
+            }
+            System.out.print("Enter the semester number: ");
+            int semesterNum = scanner.nextInt();
+            if(semesterNum > semesters.length || semesterNum < 0){
+                System.out.println("Invalid semester number.");
+                continue;
+            }
+
+            System.out.println(semesters[semesterNum] + " Semester Report");
+            System.out.printf("%-20s %-20s %-20s %-10s %-15s\n", "Student Name", "Course Title", "Professor Name", "Grade", "Tuition Fees");
+
+            for(StudentProfile student : students){
+                CourseLoad courseLoad = student.getTranscript().getCourseLoadBySemester(semesters[semesterNum]);
+                ArrayList<SeatAssignment> seatassignments = courseLoad.getSeatAssignments();
+
+                for(SeatAssignment sa : seatassignments) {
+                    CourseOffer courseOffer = sa.getCourseOffer();
+                    Course course = courseOffer.getCourse();
+                    FacultyProfile courseProfessor = courseOffer.getFacultyProfile();
+                    float gpa = sa.getGPA();
+                    String grade = sa.getGrade();
+
+                    CourseSection courseSection = sa.getCourseOffer().getCourseSection();
+                    CourseProfessor courseProfessor = courseSection.getCourseProfessor();
+                    CourseGrade courseGrade = sa.getCourseGrade();
+                }
+
+            }
+
+
         }
-
-
-
     }
-
 }
