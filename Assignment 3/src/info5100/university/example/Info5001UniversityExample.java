@@ -124,10 +124,10 @@ public class Info5001UniversityExample {
     /**
      * Creates courses and assigns them as core or elective courses in the department
      */
-    public static void populateCourse(Department dept, String[] courses) {
+    public static void populateCourse(Department dept, String[] courseNames, String[] courses) {
         ArrayList<Course> courseList = new ArrayList<>();
-        for (String course : courses) {
-            Course c = dept.newCourse(course, String.valueOf(random.nextInt(200000) + 300000), random.nextInt(4) + 1);
+        for (int i=0;i<courseNames.length;i++) {
+            Course c = dept.newCourse(courseNames[i], courses[i], random.nextInt(4) + 1);
             courseList.add(c);
         }
 
@@ -152,6 +152,17 @@ public class Info5001UniversityExample {
 
         String[] departmentNames = {"Computer Science", "Information Systems", "Software Engineering Systems"};
         String[] degreeNames = {"MS CS", "MS IS", "MS SES"};
+        String[][] courseNames = {
+                {"Intro to Computer Science", "Data Structures", "Algorithms", "Computer Systems", "Software Engineering", 
+                "Machine Learning", "Artificial Intelligence", "Networks", "Operating Systems", "Databases"},
+                
+                {"Intro to Information Systems", "Systems Analysis", "Database Management", "IT Project Management", 
+                "Enterprise Systems", "Business Intelligence", "Cybersecurity", "Data Mining", "IT Infrastructure", "Digital Innovation"},
+                
+                {"Software Engineering Fundamentals", "Software Design Patterns", "Advanced Algorithms", "Software Testing", 
+                "Software Project Management", "Agile Methodologies", "DevOps", "Software Architecture", 
+                "Web Development", "Mobile Application Development"}
+            };
         String[][] courses = {{"CS5001", "CS5002", "CS5003", "CS5004", "CS5005", "CS5006", "CS5007", "CS5008", "CS5009", "CS5010"},
                             {"IS5001", "IS5002", "IS5003", "IS5004", "IS5005", "IS5006", "IS5007", "IS5008", "IS5009", "IS5010"},
                             {"SES5001", "SES5002", "SES5003", "SES5004", "SES5005", "SES5006", "SES5007", "SES5008", "SES5009", "SES5010"}};
@@ -160,7 +171,7 @@ public class Info5001UniversityExample {
             Department department = new Department(departmentNames[i], degreeNames[i]);
             college.addDepartment(department);
             college.addDepartmentAccount(new DepartmentAccount(department));
-            populateCourse(department, courses[i]);
+            populateCourse(department, courseNames[i], courses[i]);
             populatePeople(department);
             populateEmployers(department);
             populateCourseSchedule(department);
@@ -205,8 +216,8 @@ public class Info5001UniversityExample {
             System.out.println("\n");
             System.out.println(semesters[semesterNum-1] + " Semester Report");
             System.out.println("----------------------------------------------------------");
-            System.out.printf("%-20s %-20s %-20s %-10s %-10s %-15s\n",
-            "Student Name", "Course Title", "Professor Name", "Grade", "GPA", "Tuition Fees");
+            System.out.printf("%-20s %-35s %-20s %-20s %-10s %-10s %-15s\n",
+            "Student Name", "Course Title", "Course Number", "Professor Name", "Grade", "GPA", "Tuition Fees");
 
             float avg_gpa = 0f;
             int total_tution_fees = 0, count = 0;
@@ -219,6 +230,7 @@ public class Info5001UniversityExample {
                 for(SeatAssignment sa : seatassignments) {
                     CourseOffer courseOffer = sa.getCourseOffer();
                     String course = courseOffer.getCourse().getCourseName();
+                    String courseNumber = courseOffer.getCourse().getCOurseNumber();
                     String courseProfessor = courseOffer.getFacultyProfile().getName();
                     String gpa = "" + sa.getGPA();
                     String grade = sa.getGrade();
@@ -229,7 +241,7 @@ public class Info5001UniversityExample {
                     count++;
 
                     // Print the student's course information
-                    System.out.printf("%-20s %-20s %-20s %-10s %-10s %-15s\n", studentName, course, courseProfessor, grade, gpa, fees);
+                    System.out.printf("%-20s %-35s %-20s %-20s %-10s %-10s %-15s\n", studentName, course, courseNumber, courseProfessor, grade, gpa, fees);
                 }
             }
 
