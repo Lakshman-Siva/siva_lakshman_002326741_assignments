@@ -30,7 +30,7 @@ public class FacultyDirectory {
     }
 
     public FacultyProfile newFacultyProfile(Person p) {
-
+        
         FacultyProfile sp = new FacultyProfile(p);
         teacherlist.add(sp);
         return sp;

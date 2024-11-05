@@ -55,6 +55,7 @@ public class Info5001UniversityExample {
                     }
 
                     dept.RegisterForAClass(sp.getStudentId(), courses.get(courseCount).getCOurseNumber(), sem);
+                    usedCourses.add(courseCount);
                 }
             }
         }
@@ -88,8 +89,14 @@ public class Info5001UniversityExample {
     public static void populatePeople(Department dept) {
         ArrayList<Person> people = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
-            Person p = dept.addPerson("Person" + String.valueOf(dept.toString().hashCode() + 1));
+        String[] names = {
+            "Olivia", "Liam", "Emma", "Noah", "Ava", "Elijah", "Sophia", "James", 
+            "Isabella", "Benjamin", "Mia", "Lucas", "Charlotte", "Henry", "Amelia", 
+            "Alexander", "Harper", "Sebastian", "Evelyn", "Mason"
+        };
+
+        for (String s : names) {
+            Person p = dept.addPerson(s);
             people.add(p);
         }
         for (int i = 0; i < 10; i++) {
@@ -103,7 +110,7 @@ public class Info5001UniversityExample {
     public static void populateCourse(Department dept, String[] courses) {
         ArrayList<Course> courseList = new ArrayList<>();
         for (String course : courses) {
-            Course c = dept.newCourse(course, String.valueOf(random.nextInt(200000) + 300000), random.nextInt(2) + 3);
+            Course c = dept.newCourse(course, String.valueOf(random.nextInt(200000) + 300000), random.nextInt(4) + 1);
             courseList.add(c);
         }
 
@@ -144,24 +151,25 @@ public class Info5001UniversityExample {
         System.out.println("Data Population Completed");
 
         while(true) {
-            System.out.println("Generate Report:");
+            System.out.println("\n*************************************************************");
+            System.out.println("\nGenerate Report:");
             for(int i=1; i<=departmentNames.length; i++){
-                System.out.println(i + ". " + departmentNames[i]);
+                System.out.println(i + ". " + departmentNames[i-1]);
             }
             System.out.println(departmentNames.length+1 + ". Exit");
             System.out.print("Enter the department number: ");
             int deptNum = scanner.nextInt();
 
-            if(deptNum+1 == departmentNames.length){
+            if(deptNum == departmentNames.length + 1){
                 break;
-            } else if (deptNum+1 > departmentNames.length || deptNum < 0){
+            } else if (deptNum > departmentNames.length + 1 || deptNum < 0){
                 System.out.println("Invalid department number.");
                 continue;
             }
             Department department = college.getDepartments().get(deptNum-1);
             ArrayList<StudentProfile> students = department.getStudentDirectory().getStudentList();
 
-            System.out.println("Choose the semester:");
+            System.out.println("\nChoose the semester:");
             String semesters[] = {"Fall 2024", "Spring 2025", "Fall 2025"};
             
             for(int i=0; i<semesters.length; i++){
@@ -174,27 +182,44 @@ public class Info5001UniversityExample {
                 continue;
             }
 
-            System.out.println(semesters[semesterNum] + " Semester Report");
-            System.out.printf("%-20s %-20s %-20s %-10s %-15s\n", "Student Name", "Course Title", "Professor Name", "Grade", "Tuition Fees");
+            System.out.println("\n");
+            System.out.println(semesters[semesterNum-1] + " Semester Report");
+            System.out.println("----------------------------------------------------------");
+            System.out.printf("%-20s %-20s %-20s %-10s %-10s %-15s\n",
+            "Student Name", "Course Title", "Professor Name", "Grade", "GPA", "Tuition Fees");
+
+            float avg_gpa = 0f;
+            int total_tution_fees = 0, count = 0;
 
             for(StudentProfile student : students){
-                CourseLoad courseLoad = student.getTranscript().getCourseLoadBySemester(semesters[semesterNum]);
+                String studentName = student.getStudentId();
+                CourseLoad courseLoad = student.getTranscript().getCourseLoadBySemester(semesters[semesterNum-1]);
                 ArrayList<SeatAssignment> seatassignments = courseLoad.getSeatAssignments();
 
                 for(SeatAssignment sa : seatassignments) {
                     CourseOffer courseOffer = sa.getCourseOffer();
-                    Course course = courseOffer.getCourse();
-                    FacultyProfile courseProfessor = courseOffer.getFacultyProfile();
-                    float gpa = sa.getGPA();
+                    String course = courseOffer.getCourse().getCourseName();
+                    String courseProfessor = courseOffer.getFacultyProfile().getName();
+                    String gpa = "" + sa.getGPA();
                     String grade = sa.getGrade();
+                    String fees = "$" + sa.getCreditHours()*1500;
 
-                    CourseSection courseSection = sa.getCourseOffer().getCourseSection();
-                    CourseProfessor courseProfessor = courseSection.getCourseProfessor();
-                    CourseGrade courseGrade = sa.getCourseGrade();
+                    avg_gpa += sa.getGPA();
+                    total_tution_fees += sa.getCreditHours()*1500;
+                    count++;
+
+                    // Print the student's course information
+                    System.out.printf("%-20s %-20s %-20s %-10s %-10s %-15s\n", studentName, course, courseProfessor, grade, gpa, fees);
                 }
-
             }
 
+            System.out.println("\nSummary:");
+            System.out.println("----------------------------------------------------------");
+            System.out.printf("%-40s %-20s\n", "Metric", "Value");
+
+            // Print the summary values
+            System.out.printf("%-40s %-20s\n", "Overall Average GPA for Semester", String.format("%.2f", avg_gpa/count));
+            System.out.printf("%-40s %-20s\n", "Total Tuition Fees Paid", "$" + total_tution_fees);
 
         }
     }

@@ -23,6 +23,11 @@ public class FacultyProfile {
         person = p;
         facultyassignments = new ArrayList();
     }
+
+    public String getName() {
+        return person.getPersonId();
+    }
+
     public  double getProfAverageOverallRating(){
         
         double sum = 0.0;

@@ -25,6 +25,10 @@ public class CourseOffer {
         course = c;
         seatlist = new ArrayList();
     }
+
+    public Course getCourse() {
+        return course;
+    }
     
     public void AssignAsTeacher(FacultyProfile fp) {
 

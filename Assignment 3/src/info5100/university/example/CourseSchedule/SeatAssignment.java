@@ -24,7 +24,8 @@ public class SeatAssignment {
         courseload = cl;
         random = new Random();
         like = random.nextBoolean();
-        grade = 3 + random.nextFloat();
+        grade = 3.0f + random.nextFloat();        
+        grade = Math.round(grade * 10) / 10.0f;
     }
 
     public float getGPA(){

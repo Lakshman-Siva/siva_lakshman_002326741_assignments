@@ -23,6 +23,10 @@ public class Course {
 
     }
 
+    public String getCourseName() {
+        return name;
+    }
+
     public String getCOurseNumber() {
         return number;
     }
