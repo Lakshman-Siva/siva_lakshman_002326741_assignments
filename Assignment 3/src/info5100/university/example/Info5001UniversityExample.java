@@ -39,6 +39,10 @@ public class Info5001UniversityExample {
      * @param args the command line arguments
      */
 
+    /**
+     * Populates course loads for all students in a department across multiple semesters
+     * Assigns 3 random courses per semester to each student
+     */
     public static void populateCourseLoad(Department dept) {
         ArrayList<StudentProfile> sd = dept.getStudentDirectory().getStudentList();
         ArrayList<Course> courses = dept.getCourseCatalog().getCourseList();
@@ -61,6 +65,10 @@ public class Info5001UniversityExample {
         }
     }
 
+    /**
+     * Creates course schedules for multiple semesters
+     * Assigns random faculty to courses and generates seats
+     */
     public static void populateCourseSchedule(Department dept) {
         String semesters[] = {"Fall 2024", "Spring 2025", "Fall 2025"};
         ArrayList<Course> courses = dept.getCourseCatalog().getCourseList();
@@ -79,6 +87,9 @@ public class Info5001UniversityExample {
         }
     }
 
+    /**
+     * Adds a predefined list of employers to the department
+     */
     public static void populateEmployers(Department dept) {
         String[] employers = {"Google", "Amazon", "Facebook", "Apple", "Microsoft", "Oracle"};
         for (String e : employers) {
@@ -86,6 +97,9 @@ public class Info5001UniversityExample {
         }
     }
 
+    /**
+     * Creates and assigns people as students and faculty in the department
+     */
     public static void populatePeople(Department dept) {
         ArrayList<Person> people = new ArrayList<>();
 
@@ -107,6 +121,9 @@ public class Info5001UniversityExample {
 
     }
 
+    /**
+     * Creates courses and assigns them as core or elective courses in the department
+     */
     public static void populateCourse(Department dept, String[] courses) {
         ArrayList<Course> courseList = new ArrayList<>();
         for (String course : courses) {
@@ -122,7 +139,10 @@ public class Info5001UniversityExample {
         }
     }
     
-
+    /**
+     * Main method that initializes the university system and handles user interaction
+     * Creates departments, populates data, and generates reports
+     */
     public static void main(String[] args) {
         // TODO code application logic here
         random  = new Random();
