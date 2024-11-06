@@ -7,7 +7,9 @@ package info5100.university.example;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -215,17 +217,18 @@ public class Info5001UniversityExample {
 
             System.out.println("\n");
             System.out.println(semesters[semesterNum-1] + " Semester Report");
-            System.out.println("----------------------------------------------------------");
-            System.out.printf("%-20s %-35s %-20s %-20s %-10s %-10s %-15s\n",
-            "Student Name", "Course Title", "Course Number", "Professor Name", "Grade", "GPA", "Tuition Fees");
-
-            float avg_gpa = 0f;
-            int total_tution_fees = 0, count = 0;
-
+            
             for(StudentProfile student : students){
+                float avg_gpa = 0f;
+                int total_tution_fees = 0, count = 0;
+
                 String studentName = student.getStudentId();
                 CourseLoad courseLoad = student.getTranscript().getCourseLoadBySemester(semesters[semesterNum-1]);
                 ArrayList<SeatAssignment> seatassignments = courseLoad.getSeatAssignments();
+                System.out.println("\nStudent Name: " + studentName);
+                System.out.println("----------------------------------------------------------");
+                System.out.printf("%-35s %-20s %-20s %-10s %-10s %-15s\n",
+                "Course Title", "Course Number", "Professor Name", "Grade", "GPA", "Tuition Fees");
 
                 for(SeatAssignment sa : seatassignments) {
                     CourseOffer courseOffer = sa.getCourseOffer();
@@ -241,17 +244,18 @@ public class Info5001UniversityExample {
                     count++;
 
                     // Print the student's course information
-                    System.out.printf("%-20s %-35s %-20s %-20s %-10s %-10s %-15s\n", studentName, course, courseNumber, courseProfessor, grade, gpa, fees);
+                    System.out.printf("%-35s %-20s %-20s %-10s %-10s %-15s\n", course, courseNumber, courseProfessor, grade, gpa, fees);
                 }
+                System.out.println("\nSummary:");
+                System.out.println("----------");
+                System.out.printf("%-40s %-20s\n", "Metric", "Value");
+    
+                // Print the summary values
+                System.out.printf("%-40s %-20s\n", "Overall Average GPA for Semester", String.format("%.2f", avg_gpa/count));
+                System.out.printf("%-40s %-20s\n", "Total Tuition Fees Paid", "$" + total_tution_fees);
+                System.out.println("*************************************************************************************************************");
             }
 
-            System.out.println("\nSummary:");
-            System.out.println("----------------------------------------------------------");
-            System.out.printf("%-40s %-20s\n", "Metric", "Value");
-
-            // Print the summary values
-            System.out.printf("%-40s %-20s\n", "Overall Average GPA for Semester", String.format("%.2f", avg_gpa/count));
-            System.out.printf("%-40s %-20s\n", "Total Tuition Fees Paid", "$" + total_tution_fees);
 
         }
     }
